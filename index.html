@@ -46,13 +46,7 @@ th:first-child, td:first-child { color: #c98383; }
 td.dday { position: relative; z-index: 0; color: #fff; font-weight: 500; }
 td.dday::before { content: '♥'; position: absolute; inset: 0; z-index: -1; color: #d9a4a4; font-size: 42px; line-height: 42px; }
 .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.gallery img { aspect-ratio: 1; object-fit: cover; border-radius: 4px; cursor: pointer; }
-/* 갤러리 확대: 브라우저 기본 정렬 대신 화면 전체를 덮고 직접 가운데 정렬 */
-dialog { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; outline: none; background: transparent; }
-dialog[open] { display: grid; place-items: center; }
-dialog::backdrop { background: rgba(0,0,0,.9); }
-dialog img { max-width: 100%; max-height: 100%; background: none; -webkit-tap-highlight-color: transparent; }
-body:has(dialog[open]) { overflow: hidden; }
+.gallery img { aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
 iframe { width: 100%; height: 260px; border: 0; border-radius: 8px; margin-bottom: 16px; }
 .btn { display: inline-block; padding: 10px 20px; margin: 4px; font: inherit; font-size: 13px; color: #7a655b; background: #fff; border: 1px solid #d9c3b8; border-radius: 30px; text-decoration: none; cursor: pointer; }
 details { text-align: left; margin: 10px 0; background: #fff; border: 1px solid #eee2da; border-radius: 10px; }
@@ -91,7 +85,7 @@ footer .script { font-size: 32px; color: #b98a76; margin-bottom: 16px; }
 <header class="hero">
   <img src="images/00.jpeg" alt="메인 사진">
   <div class="txt">
-    <div class="script">Save the Date</div>
+    <div class="script">Wedding Invitation</div>
     <h1>오준혁 · 박지선</h1> <!-- ★ -->
     <p>2027. 03. 14 SUN PM 12:30<br>웨딩스퀘어 강변 3F 루시드 홀</p> <!-- ★ -->
   </div>
@@ -104,7 +98,7 @@ footer .script { font-size: 32px; color: #b98a76; margin-bottom: 16px; }
   <!-- ★ 가족 소개 -->
   <div class="family">
     <div>오치식 · 송경은<small>의 장남</small> <b>준혁</b></div>
-    <div>○○○ · ○○○<small>의 차녀</small> <b>지선</b></div> <!-- TODO 신부 부모님 성함 -->
+    <div>박영기 · 이남이<small>의 차녀</small> <b>지선</b></div>
   </div>
 </section>
 
@@ -161,7 +155,6 @@ footer .script { font-size: 32px; color: #b98a76; margin-bottom: 16px; }
 
 </main>
 
-<dialog id="lightbox"><img alt=""></dialog>
 <div id="toast"></div>
 
 <script>
@@ -200,13 +193,6 @@ document.querySelectorAll('[data-copy]').forEach(b => b.onclick = () =>
   navigator.clipboard.writeText(b.dataset.copy).then(() => toast('복사되었습니다')));
 document.getElementById('share').onclick = () =>
   navigator.clipboard.writeText(location.href).then(() => toast('링크가 복사되었습니다'));
-
-// 갤러리 확대
-const lb = document.getElementById('lightbox');
-document.querySelectorAll('.gallery img').forEach(img => img.onclick = () => {
-  lb.querySelector('img').src = img.src; lb.showModal();
-});
-lb.onclick = () => lb.close();
 </script>
 </body>
 </html>
