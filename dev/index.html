@@ -38,9 +38,12 @@ th { color: #0969da; font-size: 12px; }
 td.dday { background: #1a7f37; color: #fff; border-radius: 6px; font-weight: 700; }
 .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
 .gallery img { aspect-ratio: 1; object-fit: cover; border-radius: 6px; border: 1px solid #d0d7de; cursor: pointer; }
-dialog { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; }
-dialog::backdrop { background: rgba(0,0,0,.92); }
-dialog img { max-height: 90vh; background: none; }
+/* 갤러리 확대: 브라우저 기본 정렬 대신 화면 전체를 덮고 직접 가운데 정렬 */
+dialog { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; outline: none; background: transparent; }
+dialog[open] { display: grid; place-items: center; }
+dialog::backdrop { background: rgba(0,0,0,.9); }
+dialog img { max-width: 100%; max-height: 100%; background: none; -webkit-tap-highlight-color: transparent; }
+body:has(dialog[open]) { overflow: hidden; }
 iframe { width: 100%; height: 240px; border: 1px solid #d0d7de; border-radius: 8px; margin: 12px 0; }
 .btn { font: inherit; font-size: 12px; color: #1f2328; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 6px 12px; text-decoration: none; cursor: pointer; }
 .btn:hover { background: #d0d7de; }
