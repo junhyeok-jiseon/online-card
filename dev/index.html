@@ -50,10 +50,15 @@ footer { margin-top: 64px; text-align: center; color: #6e7781; font-size: 12px; 
 .tabs { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 6; display: flex; padding: 3px; background: #fff; border: 1px solid #d0d7de; border-radius: 8px; font-size: 12px; }
 .tabs a { padding: 5px 14px; border-radius: 6px; color: #6e7781; text-decoration: none; }
 .tabs a.on { background: #f6f8fa; color: #1f2328; font-weight: 700; }
+/* 배경음악 버튼 */
+.music { position: fixed; right: 16px; bottom: 24px; z-index: 6; font: inherit; font-size: 12px; padding: 8px 14px; border-radius: 20px; border: 1px solid #d0d7de; background: #fff; color: #1f2328; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+.music.on { color: #1a7f37; border-color: #1a7f37; }
 </style>
 </head>
 <body>
 <nav class="tabs"><a href="../index.html">클래식</a><a class="on">터미널</a></nav>
+<audio id="bgm" src="../music/bgm.m4a" loop preload="none"></audio>
+<button class="music" id="music" aria-label="배경음악">▶ bgm</button>
 
 <main>
 
@@ -138,6 +143,7 @@ addr  = <span class="s">"서울 광진구 광나루로56길 85 테크노마트"<
 <footer>
   <p><span class="g">✔</span> Process finished with exit code 0</p>
   <button class="btn" id="share" style="margin-top:16px">$ pbcopy &lt; invitation.url</button>
+  <p class="c" style="margin-top:20px;font-size:11px">// BGM: "Canon in D Major" Kevin MacLeod (incompetech.com)<br>// Licensed under Creative Commons: By Attribution 4.0</p>
 </footer>
 
 </main>
@@ -222,6 +228,13 @@ document.querySelectorAll('[data-copy]').forEach(b => b.onclick = () =>
   navigator.clipboard.writeText(b.dataset.copy).then(() => toast('copied ✔')));
 document.getElementById('share').onclick = () =>
   navigator.clipboard.writeText(location.href).then(() => toast('link copied ✔'));
+
+// 배경음악: 첫 터치에 재생 시작, 버튼으로 켜고 끄기 (모바일은 소리 자동재생 불가)
+const bgm = document.getElementById('bgm'), mbtn = document.getElementById('music');
+const setIcon = () => { mbtn.textContent = bgm.paused ? '▶ bgm' : '❚❚ bgm'; mbtn.classList.toggle('on', !bgm.paused); };
+bgm.onplay = bgm.onpause = setIcon;
+mbtn.onclick = () => bgm.paused ? bgm.play().catch(() => {}) : bgm.pause();
+document.addEventListener('pointerup', e => { if (!e.target.closest('#music') && bgm.paused) bgm.play().catch(() => {}); }, { once: true });
 </script>
 </body>
 </html>

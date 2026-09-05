@@ -62,10 +62,16 @@ footer .script { font-size: 32px; color: #b98a76; margin-bottom: 16px; }
 .tabs { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 6; display: flex; padding: 3px; background: rgba(255,250,246,.92); border: 1px solid #d9c3b8; border-radius: 30px; font-size: 12px; letter-spacing: 1px; }
 .tabs a { padding: 6px 16px; border-radius: 30px; color: #9b8478; text-decoration: none; }
 .tabs a.on { background: #b98a76; color: #fff; }
+/* 배경음악 버튼 */
+.music { position: fixed; right: 16px; bottom: 24px; z-index: 6; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #d9c3b8; background: rgba(255,250,246,.92); color: #b98a76; font: inherit; font-size: 18px; cursor: pointer; }
+.music.on { animation: beat 1.6s ease-in-out infinite; }
+@keyframes beat { 50% { transform: scale(1.12) } }
 </style>
 </head>
 <body>
 <nav class="tabs"><a class="on">클래식</a><a href="dev/index.html">터미널</a></nav>
+<audio id="bgm" src="music/bgm.m4a" loop preload="none"></audio>
+<button class="music" id="music" aria-label="배경음악">♪</button>
 
 
 
@@ -151,6 +157,7 @@ footer .script { font-size: 32px; color: #b98a76; margin-bottom: 16px; }
 <footer>
   <div class="script">Thank you</div>
   <button class="btn" id="share">청첩장 링크 복사</button>
+  <p style="margin-top:20px;font-size:11px;color:#c9b8ae;line-height:1.7">BGM: "Canon in D Major" Kevin MacLeod (incompetech.com)<br>Licensed under Creative Commons: By Attribution 4.0</p>
 </footer>
 
 </main>
@@ -193,6 +200,13 @@ document.querySelectorAll('[data-copy]').forEach(b => b.onclick = () =>
   navigator.clipboard.writeText(b.dataset.copy).then(() => toast('복사되었습니다')));
 document.getElementById('share').onclick = () =>
   navigator.clipboard.writeText(location.href).then(() => toast('링크가 복사되었습니다'));
+
+// 배경음악: 첫 터치에 재생 시작, 버튼으로 켜고 끄기 (모바일은 소리 자동재생 불가)
+const bgm = document.getElementById('bgm'), mbtn = document.getElementById('music');
+const setIcon = () => { mbtn.textContent = bgm.paused ? '♪' : '♫'; mbtn.classList.toggle('on', !bgm.paused); };
+bgm.onplay = bgm.onpause = setIcon;
+mbtn.onclick = () => bgm.paused ? bgm.play().catch(() => {}) : bgm.pause();
+document.addEventListener('pointerup', e => { if (!e.target.closest('#music') && bgm.paused) bgm.play().catch(() => {}); }, { once: true });
 </script>
 </body>
 </html>
