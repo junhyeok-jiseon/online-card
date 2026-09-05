@@ -56,6 +56,7 @@ dialog[open] { display: grid; place-items: center; }
 dialog::backdrop { background: rgba(0,0,0,.9); }
 dialog img { max-width: 100%; max-height: 100%; background: none; -webkit-tap-highlight-color: transparent; }
 body:has(dialog[open]) { overflow: hidden; }
+dialog .count { position: absolute; left: 0; right: 0; bottom: 28px; text-align: center; color: #fff; font-size: 13px; opacity: .8; }
 /* 배경음악 버튼 */
 .music { position: fixed; right: 16px; bottom: 24px; z-index: 6; font: inherit; font-size: 12px; padding: 8px 14px; border-radius: 20px; border: 1px solid #d0d7de; background: #fff; color: #1f2328; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
 .music.on { color: #1a7f37; border-color: #1a7f37; }
@@ -152,7 +153,7 @@ addr  = <span class="s">"서울 광진구 광나루로56길 85 테크노마트"<
 
 </main>
 
-<dialog id="lightbox"><img alt=""></dialog>
+<dialog id="lightbox"><img alt=""><span class="count"></span></dialog>
 <div id="toast"></div>
 
 <script>
@@ -234,12 +235,20 @@ document.querySelectorAll('[data-copy]').forEach(b => b.onclick = () =>
 document.getElementById('share').onclick = () =>
   navigator.clipboard.writeText(location.href).then(() => toast('link copied ✔'));
 
-// 갤러리 확대 (열려 있는 동안 iOS 핀치 줌도 차단)
-const lb = document.getElementById('lightbox');
-document.querySelectorAll('.gallery img').forEach(img => img.onclick = () => {
-  lb.querySelector('img').src = img.src; lb.showModal();
+// 갤러리 확대: 좌우 스와이프로 넘기기, 탭하면 닫기 (열려 있는 동안 iOS 핀치 줌 차단)
+const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img'), lbCnt = lb.querySelector('.count');
+const pics = [...document.querySelectorAll('.gallery img')];
+let cur = 0, x0 = null;
+const show = i => { cur = (i + pics.length) % pics.length; lbImg.src = pics[cur].src; lbCnt.textContent = `${cur + 1} / ${pics.length}`; };
+pics.forEach((img, i) => img.onclick = () => { show(i); lb.showModal(); });
+lb.addEventListener('touchstart', e => x0 = e.touches.length === 1 ? e.touches[0].clientX : null, { passive: true });
+lb.addEventListener('touchend', e => {
+  if (x0 === null || e.touches.length) return;   // 두 손가락 제스처는 무시
+  e.preventDefault();                              // 닫힌 뒤 뒤쪽 요소가 눌리는 현상 방지
+  const dx = e.changedTouches[0].clientX - x0;
+  Math.abs(dx) > 40 ? show(cur + (dx < 0 ? 1 : -1)) : lb.close();
 });
-lb.onclick = () => lb.close();
+lb.onclick = () => lb.close();                     // 마우스용
 document.addEventListener('gesturestart', e => lb.open && e.preventDefault());
 
 // 배경음악: 첫 터치에 재생 시작, 버튼으로 켜고 끄기 (모바일은 소리 자동재생 불가)
