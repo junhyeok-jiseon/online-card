@@ -37,7 +37,7 @@ td, th { width: 40px; height: 36px; text-align: center; font-weight: 400; color:
 th { color: #0969da; font-size: 12px; }
 td.dday { background: #1a7f37; color: #fff; border-radius: 6px; font-weight: 700; }
 .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
-.gallery img { aspect-ratio: 1; object-fit: cover; border-radius: 6px; border: 1px solid #d0d7de; }
+.gallery img { aspect-ratio: 1; object-fit: cover; border-radius: 6px; border: 1px solid #d0d7de; cursor: pointer; }
 iframe { width: 100%; height: 240px; border: 1px solid #d0d7de; border-radius: 8px; margin: 12px 0; }
 .btn { font: inherit; font-size: 12px; color: #1f2328; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 6px 12px; text-decoration: none; cursor: pointer; }
 .btn:hover { background: #d0d7de; }
@@ -50,6 +50,12 @@ footer { margin-top: 64px; text-align: center; color: #6e7781; font-size: 12px; 
 .tabs { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 6; display: flex; padding: 3px; background: #fff; border: 1px solid #d0d7de; border-radius: 8px; font-size: 12px; }
 .tabs a { padding: 5px 14px; border-radius: 6px; color: #6e7781; text-decoration: none; }
 .tabs a.on { background: #f6f8fa; color: #1f2328; font-weight: 700; }
+/* 갤러리 확대: 화면 전체를 덮고 가운데 정렬. touch-action none 으로 확대 중 핀치 줌 차단 */
+dialog { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; outline: none; background: transparent; touch-action: none; }
+dialog[open] { display: grid; place-items: center; }
+dialog::backdrop { background: rgba(0,0,0,.9); }
+dialog img { max-width: 100%; max-height: 100%; background: none; -webkit-tap-highlight-color: transparent; }
+body:has(dialog[open]) { overflow: hidden; }
 /* 배경음악 버튼 */
 .music { position: fixed; right: 16px; bottom: 24px; z-index: 6; font: inherit; font-size: 12px; padding: 8px 14px; border-radius: 20px; border: 1px solid #d0d7de; background: #fff; color: #1f2328; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
 .music.on { color: #1a7f37; border-color: #1a7f37; }
@@ -146,6 +152,7 @@ addr  = <span class="s">"서울 광진구 광나루로56길 85 테크노마트"<
 
 </main>
 
+<dialog id="lightbox"><img alt=""></dialog>
 <div id="toast"></div>
 
 <script>
@@ -226,6 +233,14 @@ document.querySelectorAll('[data-copy]').forEach(b => b.onclick = () =>
   navigator.clipboard.writeText(b.dataset.copy).then(() => toast('copied ✔')));
 document.getElementById('share').onclick = () =>
   navigator.clipboard.writeText(location.href).then(() => toast('link copied ✔'));
+
+// 갤러리 확대 (열려 있는 동안 iOS 핀치 줌도 차단)
+const lb = document.getElementById('lightbox');
+document.querySelectorAll('.gallery img').forEach(img => img.onclick = () => {
+  lb.querySelector('img').src = img.src; lb.showModal();
+});
+lb.onclick = () => lb.close();
+document.addEventListener('gesturestart', e => lb.open && e.preventDefault());
 
 // 배경음악: 첫 터치에 재생 시작, 버튼으로 켜고 끄기 (모바일은 소리 자동재생 불가)
 const bgm = document.getElementById('bgm'), mbtn = document.getElementById('music');
