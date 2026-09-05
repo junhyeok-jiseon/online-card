@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <!-- ★ 표시된 곳을 본인 정보로 바꾸세요 -->
 <title>오준혁 ♥ 박지선 결혼합니다</title> <!-- ★ -->
 <meta property="og:title" content="오준혁 ♥ 박지선 결혼합니다"> <!-- ★ -->
@@ -69,6 +69,8 @@ dialog::backdrop { background: rgba(0,0,0,.9); }
 dialog img { max-width: 100%; max-height: 100%; background: none; -webkit-tap-highlight-color: transparent; }
 body:has(dialog[open]) { overflow: hidden; }
 dialog .count { position: absolute; left: 0; right: 0; bottom: 28px; text-align: center; color: #fff; font-size: 13px; opacity: .8; }
+dialog .nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(0,0,0,.4); color: #fff; font: inherit; font-size: 30px; line-height: 1; padding: 0 0 4px; cursor: pointer; }
+dialog .prev { left: 10px; } dialog .next { right: 10px; }
 /* 배경음악 버튼 */
 .music { position: fixed; right: 16px; bottom: 24px; z-index: 6; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #d9c3b8; background: rgba(255,250,246,.92); color: #b98a76; font: inherit; font-size: 18px; cursor: pointer; }
 .music.on { animation: beat 1.6s ease-in-out infinite; }
@@ -167,7 +169,7 @@ dialog .count { position: absolute; left: 0; right: 0; bottom: 28px; text-align:
 
 </main>
 
-<dialog id="lightbox"><img alt=""><span class="count"></span></dialog>
+<dialog id="lightbox"><img alt=""><button class="nav prev" aria-label="이전">‹</button><button class="nav next" aria-label="다음">›</button><span class="count"></span></dialog>
 <div id="toast"></div>
 
 <script>
@@ -215,12 +217,14 @@ const show = i => { cur = (i + pics.length) % pics.length; lbImg.src = pics[cur]
 pics.forEach((img, i) => img.onclick = () => { show(i); lb.showModal(); });
 lb.addEventListener('touchstart', e => x0 = e.touches.length === 1 ? e.touches[0].clientX : null, { passive: true });
 lb.addEventListener('touchend', e => {
-  if (x0 === null || e.touches.length) return;   // 두 손가락 제스처는 무시
+  if (x0 === null || e.touches.length || e.target.closest('.nav')) return;   // 두 손가락 제스처·화살표 탭은 무시
   e.preventDefault();                              // 닫힌 뒤 뒤쪽 요소가 눌리는 현상 방지
   const dx = e.changedTouches[0].clientX - x0;
   Math.abs(dx) > 40 ? show(cur + (dx < 0 ? 1 : -1)) : lb.close();
 });
 lb.onclick = () => lb.close();                     // 마우스용
+lb.querySelector('.prev').onclick = e => { e.stopPropagation(); show(cur - 1); };
+lb.querySelector('.next').onclick = e => { e.stopPropagation(); show(cur + 1); };
 document.addEventListener('gesturestart', e => lb.open && e.preventDefault());
 
 // 배경음악: 첫 터치에 재생 시작, 버튼으로 켜고 끄기 (모바일은 소리 자동재생 불가)
