@@ -25,7 +25,8 @@ main { max-width: 480px; margin: 0 auto; background: #fffaf6; }
 .hero { position: relative; height: 100vh; max-height: 720px; overflow: hidden; }
 .hero img { width: 100%; height: 100%; object-fit: cover; background: #e7d9d0; animation: kb 14s ease-out forwards; }
 @keyframes kb { from { transform: scale(1.15) } }
-.hero .txt { position: absolute; inset: auto 0 48px; text-align: center; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.5); }
+.hero::after { content: ''; position: absolute; inset: 40% 0 0; background: linear-gradient(to bottom, transparent, rgba(40,30,25,.7)); pointer-events: none; } /* 글자 가독성용 그라데이션 */
+.hero .txt { position: absolute; inset: auto 0 48px; z-index: 1; text-align: center; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.5); }
 .hero .script { font-size: 46px; line-height: 1; }
 .hero h1 { font-size: 20px; font-weight: 500; letter-spacing: 6px; margin: 12px 0 6px; }
 .hero p { font-size: 13px; letter-spacing: 1px; }
