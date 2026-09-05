@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ★ 표시된 곳을 본인 정보로 바꾸세요 -->
+<title>오준혁 ♥ 박지선 결혼합니다</title> <!-- ★ -->
+<meta property="og:title" content="오준혁 ♥ 박지선 결혼합니다"> <!-- ★ -->
+<meta property="og:description" content="2027년 3월 14일 일요일 오후 12시 30분, 웨딩스퀘어 강변"> <!-- ★ -->
+<meta property="og:image" content="https://junhyeok-jiseon.github.io/online-card/images/main.jpg"> <!-- ★ -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; }
+body { font-family: 'Noto Serif KR', serif; font-weight: 300; color: #4a3f3a; background: #f3ece6; line-height: 1.9; word-break: keep-all; }
+.script { font-family: 'Great Vibes', cursive; font-weight: 400; }
+main { max-width: 480px; margin: 0 auto; background: #fffaf6; }
+
+
+/* ── 꽃잎 ── */
+.petals { position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+.petals i { position: absolute; top: -20px; width: 12px; height: 12px; background: #f1c4c4; border-radius: 12px 0; opacity: .75; animation: fall linear infinite; }
+@keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+/* ── 본문 ── */
+.hero { position: relative; height: 100vh; max-height: 720px; overflow: hidden; }
+.hero img { width: 100%; height: 100%; object-fit: cover; background: #e7d9d0; animation: kb 14s ease-out forwards; }
+@keyframes kb { from { transform: scale(1.15) } }
+.hero .txt { position: absolute; inset: auto 0 48px; text-align: center; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.5); }
+.hero .script { font-size: 46px; line-height: 1; }
+.hero h1 { font-size: 20px; font-weight: 500; letter-spacing: 6px; margin: 12px 0 6px; }
+.hero p { font-size: 13px; letter-spacing: 1px; }
+section { padding: 64px 28px; text-align: center; opacity: 0; transform: translateY(30px); transition: .9s; }
+section.on { opacity: 1; transform: none; }
+h2 { font-size: 36px; color: #b98a76; margin-bottom: 24px; }
+h2 small { display: block; font-family: 'Noto Serif KR', serif; font-size: 11px; letter-spacing: 4px; color: #b9a59a; }
+p { font-size: 15px; }
+img { display: block; max-width: 100%; background: #eee5df; }
+.family { display: flex; justify-content: center; gap: 28px; font-size: 14px; margin-top: 36px; }
+.family small { color: #9b8478; }
+.family b { font-weight: 500; }
+table { margin: 0 auto 20px; border-collapse: collapse; font-size: 14px; }
+td, th { width: 42px; height: 42px; text-align: center; font-weight: 300; }
+th { font-size: 11px; color: #b9a59a; }
+th:first-child, td:first-child { color: #c98383; }
+td.dday { position: relative; z-index: 0; color: #fff; font-weight: 500; }
+td.dday::before { content: '♥'; position: absolute; inset: 0; z-index: -1; color: #d9a4a4; font-size: 42px; line-height: 42px; }
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.gallery img { aspect-ratio: 1; object-fit: cover; border-radius: 4px; cursor: pointer; }
+.gallery img:first-child { grid-column: span 2; aspect-ratio: 3/2; }
+dialog { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; }
+dialog::backdrop { background: rgba(0,0,0,.9); }
+dialog img { max-height: 90vh; background: none; }
+iframe { width: 100%; height: 260px; border: 0; border-radius: 8px; margin-bottom: 16px; }
+.btn { display: inline-block; padding: 10px 20px; margin: 4px; font: inherit; font-size: 13px; color: #7a655b; background: #fff; border: 1px solid #d9c3b8; border-radius: 30px; text-decoration: none; cursor: pointer; }
+details { text-align: left; margin: 10px 0; background: #fff; border: 1px solid #eee2da; border-radius: 10px; }
+summary { padding: 14px 18px; font-size: 14px; font-weight: 500; cursor: pointer; }
+.account { display: flex; justify-content: space-between; align-items: center; padding: 10px 18px; font-size: 14px; border-top: 1px solid #f3ece6; }
+.account small { display: block; color: #9b8478; }
+footer { padding: 40px; text-align: center; font-size: 12px; color: #b9a59a; }
+footer .script { font-size: 32px; color: #b98a76; margin-bottom: 16px; }
+#toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); padding: 10px 20px; background: rgba(74,63,58,.85); color: #fff; font-size: 13px; border-radius: 20px; opacity: 0; transition: opacity .3s; pointer-events: none; }
+#toast.on { opacity: 1; }
+/* 템플릿 전환 탭 */
+.tabs { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 6; display: flex; padding: 3px; background: rgba(255,250,246,.92); border: 1px solid #d9c3b8; border-radius: 30px; font-size: 12px; letter-spacing: 1px; }
+.tabs a { padding: 6px 16px; border-radius: 30px; color: #9b8478; text-decoration: none; }
+.tabs a.on { background: #b98a76; color: #fff; }
+</style>
+</head>
+<body>
+<nav class="tabs"><a class="on">클래식</a><a href="dev/index.html">터미널</a></nav>
+
+
+
+<!-- 꽃잎 (개수·속도 자유) -->
+<div class="petals">
+  <i style="left:8%;animation-duration:9s;animation-delay:-1s"></i>
+  <i style="left:22%;animation-duration:12s;animation-delay:-5s"></i>
+  <i style="left:37%;animation-duration:10s;animation-delay:-3s"></i>
+  <i style="left:51%;animation-duration:13s;animation-delay:-8s"></i>
+  <i style="left:64%;animation-duration:9s;animation-delay:-6s"></i>
+  <i style="left:78%;animation-duration:11s;animation-delay:-2s"></i>
+  <i style="left:91%;animation-duration:12s;animation-delay:-9s"></i>
+</div>
+
+<main>
+
+<header class="hero">
+  <img src="images/main.jpg" alt="메인 사진">
+  <div class="txt">
+    <div class="script">Save the Date</div>
+    <h1>오준혁 · 박지선</h1> <!-- ★ -->
+    <p>2027. 03. 14 SUN PM 12:30<br>웨딩스퀘어 강변 3F 루시드 홀</p> <!-- ★ -->
+  </div>
+</header>
+
+<section>
+  <h2 class="script">Invitation<small>초대합니다</small></h2>
+  <!-- ★ 인사말 -->
+  <p>서로에게 가장 편한 사람이 되어<br>함께한 시간이 이천 일을 넘었습니다.<br>이제 평생을 약속하는 자리에<br>소중한 분들을 초대합니다.<br><br>귀한 발걸음으로 축복해 주시면<br>더없는 기쁨으로 간직하겠습니다.</p>
+  <!-- ★ 가족 소개 -->
+  <div class="family">
+    <div>오치식 · 송경은<small>의 장남</small> <b>준혁</b></div>
+    <div>○○○ · ○○○<small>의 차녀</small> <b>지선</b></div> <!-- TODO 신부 부모님 성함 -->
+  </div>
+</section>
+
+<section>
+  <h2 class="script" id="month"></h2>
+  <table id="calendar">
+    <thead><tr><th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <p id="countdown"></p>
+</section>
+
+<section>
+  <h2 class="script">Gallery<small>우리의 순간</small></h2>
+  <div class="gallery"> <!-- ★ 첫 사진이 크게 나옴. 개수 자유 -->
+    <img src="images/1.jpg" alt="">
+    <img src="images/2.jpg" alt="">
+    <img src="images/3.jpg" alt="">
+    <img src="images/4.jpg" alt="">
+    <img src="images/5.jpg" alt="">
+  </div>
+</section>
+
+<section>
+  <h2 class="script">Location<small>오시는 길</small></h2>
+  <!-- ★ 예식장 -->
+  <p style="margin-bottom:16px"><b>웨딩스퀘어 강변 3F 루시드 홀</b><br>서울 광진구 광나루로56길 85 테크노마트</p>
+  <iframe src="https://maps.google.com/maps?q=서울 광진구 광나루로56길 85&z=16&output=embed" loading="lazy"></iframe>
+  <a class="btn" href="https://map.kakao.com/link/search/웨딩스퀘어%20강변">카카오맵</a>
+  <a class="btn" href="https://map.naver.com/p/search/웨딩스퀘어%20강변">네이버지도</a>
+  <p style="margin-top:24px;font-size:13px;color:#9b8478">지하철 2호선 강변역 1, 2번 출구 연결 테크노마트 강변 3F<br>주차: 강변 테크노마트 건물 내 지하 주차장</p>
+</section>
+
+<section>
+  <h2 class="script">With Love<small>마음 전하실 곳</small></h2>
+  <!-- ★ 계좌. data-copy 가 실제 복사되는 값 -->
+  <details>
+    <summary>신랑측 계좌번호</summary>
+    <div class="account"><div>신랑 오준혁<small>토스뱅크 1000-0420-8226</small></div><button class="btn" data-copy="1000-0420-8226">복사</button></div>
+    <!-- TODO 신랑 아버지 계좌: <div class="account"><div>아버지 오치식<small>은행 계좌번호</small></div><button class="btn" data-copy="계좌번호">복사</button></div> -->
+  </details>
+  <!-- TODO 신부측 계좌
+  <details>
+    <summary>신부측 계좌번호</summary>
+    <div class="account"><div>신부 박지선<small>은행 계좌번호</small></div><button class="btn" data-copy="계좌번호">복사</button></div>
+  </details>
+  -->
+</section>
+
+<footer>
+  <div class="script">Thank you</div>
+  <button class="btn" id="share">청첩장 링크 복사</button>
+</footer>
+
+</main>
+
+<dialog id="lightbox"><img alt=""></dialog>
+<div id="toast"></div>
+
+<script>
+const WEDDING = new Date('2027-03-14T12:30:00+09:00'); // ★ 예식 일시
+
+
+// 스크롤 등장
+const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('on')), { threshold: .15 });
+document.querySelectorAll('section').forEach(s => io.observe(s));
+
+// 달력
+const y = WEDDING.getFullYear(), m = WEDDING.getMonth();
+const first = new Date(y, m, 1).getDay(), last = new Date(y, m + 1, 0).getDate();
+let cells = '<tr>' + '<td></td>'.repeat(first);
+for (let d = 1; d <= last; d++) {
+  if (d > 1 && (first + d - 1) % 7 === 0) cells += '</tr><tr>';
+  cells += `<td${d === WEDDING.getDate() ? ' class="dday"' : ''}>${d}</td>`;
+}
+document.querySelector('#calendar tbody').innerHTML = cells + '</tr>';
+document.getElementById('month').textContent = WEDDING.toLocaleString('en', { month: 'long', year: 'numeric' });
+
+// D-day
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const wday = new Date(WEDDING); wday.setHours(0, 0, 0, 0);
+const diff = Math.round((wday - today) / 864e5);
+document.getElementById('countdown').textContent =
+  diff > 0 ? `결혼식까지 ${diff}일 남았습니다` : diff === 0 ? '오늘 결혼합니다' : '결혼식을 무사히 마쳤습니다';
+
+// 토스트
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('on');
+  clearTimeout(t.timer); t.timer = setTimeout(() => t.classList.remove('on'), 1500);
+}
+document.querySelectorAll('[data-copy]').forEach(b => b.onclick = () =>
+  navigator.clipboard.writeText(b.dataset.copy).then(() => toast('복사되었습니다')));
+document.getElementById('share').onclick = () =>
+  navigator.clipboard.writeText(location.href).then(() => toast('링크가 복사되었습니다'));
+
+// 갤러리 확대
+const lb = document.getElementById('lightbox');
+document.querySelectorAll('.gallery img').forEach(img => img.onclick = () => {
+  lb.querySelector('img').src = img.src; lb.showModal();
+});
+lb.onclick = () => lb.close();
+</script>
+</body>
+</html>
