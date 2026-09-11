@@ -307,6 +307,7 @@ dialog .prev { left: 10px; } dialog .next { right: 10px; }
 <footer>
   <div class="script">Thank you</div>
   <button class="btn" id="share">청첩장 링크 복사</button>
+  <button class="btn" id="replay">스토리 다시 보기</button>
   <p style="margin-top:20px;font-size:11px;color:#c9b8ae;line-height:1.7">BGM: "Canon in D Major" Kevin MacLeod (incompetech.com)<br>Licensed under Creative Commons: By Attribution 4.0</p>
 </footer>
 
@@ -438,10 +439,16 @@ function go(i) {
   nextBtn.hidden = 'gate' in sc.dataset;
   nextBtn.textContent = si === scenes.length - 1 ? '청첩장 보기 💌' : si === 0 ? '시작하기 ▶' : '다음 ▶';
 }
-const finish = () => { stage.classList.add('off'); document.body.style.overflow = ''; };
+const finish = instant => {
+  stage.classList.add('off'); document.body.style.overflow = '';
+  if (instant) stage.style.display = 'none';
+  try { localStorage.storySeen = 1; } catch (e) {}   // 다음 방문부터 스토리 건너뛰기
+};
 nextBtn.onclick = () => si < scenes.length - 1 ? go(si + 1) : finish();
-document.getElementById('skipStory').onclick = finish;
+document.getElementById('skipStory').onclick = () => finish();
+document.getElementById('replay').onclick = () => { try { localStorage.removeItem('storySeen'); } catch (e) {} location.reload(); };
 go(0);
+try { if (localStorage.storySeen) finish(true); } catch (e) {}
 
 // 탭하면 하트 (1000일 장면)
 const fly = (x, y, box) => { const h = document.createElement('span'); h.className = 'fly'; h.textContent = '♥'; h.style.left = x + 'px'; h.style.top = y + 'px'; box.appendChild(h); setTimeout(() => h.remove(), 1200); };
