@@ -76,10 +76,142 @@ dialog .prev { left: 10px; } dialog .next { right: 10px; }
 .music { position: fixed; right: 16px; bottom: 24px; z-index: 6; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #d9c3b8; background: rgba(255,250,246,.92); color: #b98a76; font: inherit; font-size: 18px; cursor: pointer; }
 .music.on { animation: beat 1.6s ease-in-out infinite; }
 @keyframes beat { 50% { transform: scale(1.12) } }
+
+/* ══ 스토리 애니메이션 ══ */
+.stage { position: fixed; inset: 0; z-index: 20; overflow: hidden; background: #fff; transition: opacity .8s; font-family: 'Noto Serif KR', serif; }
+.stage.off { opacity: 0; pointer-events: none; }
+.scene { position: absolute; inset: 0; display: none; }
+.scene.on { display: block; }
+.ground { position: absolute; left: 0; right: 0; bottom: 0; height: 22%; }
+.label { position: absolute; top: 68px; left: 0; right: 0; text-align: center; color: #4a3f3a; padding: 0 24px; }
+.label small { display: block; font-size: 11px; letter-spacing: 4px; color: #b98a76; }
+.label b { display: block; font-size: 22px; font-weight: 500; letter-spacing: 3px; margin-top: 4px; }
+.label span { font-size: 13px; opacity: .8; }
+.scene.dark .label { color: #fff; } .scene.dark .label small { color: #ffd6a5; }
+.hint { position: absolute; bottom: calc(22% + 245px); left: 0; right: 0; text-align: center; font-size: 13px; color: #6f5f56; animation: pulse 1.6s ease-in-out infinite; }
+.scene.dark .hint { color: #fff; }
+@keyframes pulse { 50% { opacity: .35 } }
+
+/* 캐릭터 */
+.chars { position: absolute; bottom: 21%; left: 50%; transform: translateX(-50%); display: flex; gap: 14px; align-items: flex-end; }
+.who { position: relative; }
+.who svg { width: 108px; height: auto; display: block; }
+.scene.on .who.g { animation: inL 1.6s ease-out both; } .scene.on .who.b { animation: inR 1.6s ease-out both; }
+@keyframes inL { from { transform: translateX(-70vw) } } @keyframes inR { from { transform: translateX(70vw) } }
+/* 걸어 들어올 때 팔다리 흔들기, 도착하면 숨 쉬듯 위아래 */
+.leg, .arm { transform-box: fill-box; transform-origin: 50% 0; }
+.walk .leg.l, .walk .arm.r { animation: swing .45s ease-in-out infinite alternate; }
+.walk .leg.r, .walk .arm.l { animation: swing .45s ease-in-out infinite alternate-reverse; }
+@keyframes swing { from { transform: rotate(-24deg) } to { transform: rotate(24deg) } }
+.idle svg { animation: bob 1.8s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-3px) } }
+.bubble { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) scale(.6); background: #fff; color: #333; border-radius: 16px; padding: 6px 12px; font-size: 13px; white-space: nowrap; box-shadow: 0 4px 14px rgba(0,0,0,.12); opacity: 0; }
+.bubble::after { content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px; border: 6px solid transparent; border-top-color: #fff; }
+.scene.on .bubble { animation: pop .4s cubic-bezier(.2,1.4,.4,1) forwards; animation-delay: var(--d, 1.9s); }
+.bubble.wait { animation: none !important; } .bubble.wait.show { animation: pop .4s cubic-bezier(.2,1.4,.4,1) forwards !important; }
+@keyframes pop { to { opacity: 1; transform: translateX(-50%) scale(1) } }
+
+/* 소품 */
+.sun { position: absolute; top: 24%; right: 14%; width: 64px; height: 64px; border-radius: 50%; background: #ffd166; box-shadow: 0 0 50px 10px rgba(255,209,102,.6); }
+.moon { position: absolute; top: 24%; right: 16%; width: 56px; height: 56px; border-radius: 50%; background: #fff4d6; box-shadow: 0 0 40px 8px rgba(255,244,214,.4); }
+.tree { position: absolute; bottom: 22%; width: 14px; height: 70px; background: #8b5e3c; border-radius: 4px; }
+.tree::after { content: ''; position: absolute; bottom: 40px; left: -43px; width: 100px; height: 100px; border-radius: 50%; background: var(--leaf, #5fae5f); }
+.arch { position: absolute; bottom: 22%; left: 50%; transform: translateX(-50%); width: 300px; height: 230px; border: 16px solid #b7e4c7; border-bottom: 0; border-radius: 150px 150px 0 0; box-sizing: content-box; }
+.arch::before, .arch::after { content: '❀ ❀ ❀ ❀ ❀ ❀ ❀'; position: absolute; color: #ffafcc; font-size: 22px; letter-spacing: 6px; }
+.arch::before { top: -6px; left: 30px; } .arch::after { top: 70px; left: -30px; transform: rotate(80deg); }
+.fx { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.fx i { position: absolute; top: -20px; display: block; animation: fall linear infinite; }
+.fx.petal i { width: 12px; height: 12px; background: #ffb7c5; border-radius: 12px 0; }
+.fx.snow i { width: 8px; height: 8px; background: #fff; border-radius: 50%; opacity: .9; }
+.fx.confetti i { width: 8px; height: 14px; }
+.fx.stars i { top: auto; width: 3px; height: 3px; background: #fff; border-radius: 50%; animation: twinkle 2s ease-in-out infinite; }
+@keyframes twinkle { 50% { opacity: .2 } }
+.fly { position: absolute; font-size: 24px; color: #ff6b8a; pointer-events: none; animation: rise 1.2s ease-out forwards; z-index: 5; }
+@keyframes rise { to { transform: translateY(-160px) scale(1.5); opacity: 0 } }
+.ring { position: absolute; bottom: calc(22% + 175px); left: 50%; transform: translateX(-50%); border: 0; background: none; font-size: 44px; cursor: pointer; filter: drop-shadow(0 0 12px #ffd166); animation: bob 1.2s ease-in-out infinite; }
+.ring.given { animation: give .9s ease-in forwards; pointer-events: none; }
+@keyframes give { 60% { transform: translate(40px, -40px) scale(.8); opacity: 1 } to { transform: translate(60px, -60px) scale(.3); opacity: 0 } }
+
+/* 조작 */
+.ui { position: absolute; bottom: 28px; left: 0; right: 0; text-align: center; }
+.next { padding: 12px 34px; border: 0; border-radius: 30px; background: #b98a76; color: #fff; font: inherit; font-size: 15px; letter-spacing: 1px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.15); }
+.next[hidden] { display: none; }
+.dots { margin-top: 14px; display: flex; justify-content: center; gap: 6px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,.18); }
+.dots i.on { background: #b98a76; }
+.scene.dark.on ~ .ui .dots i { background: rgba(255,255,255,.3); } 
+.skipbtn { position: absolute; top: 66px; right: 16px; z-index: 2; background: rgba(255,255,255,.7); border: 0; border-radius: 20px; padding: 6px 12px; font: inherit; font-size: 12px; color: #6f5f56; cursor: pointer; }
 </style>
 </head>
 <body>
-<nav class="tabs"><a class="on">클래식</a><a href="dev/index.html">터미널</a><a href="story/index.html">스토리</a></nav>
+
+<!-- ══ 스토리 애니메이션 ══ -->
+<div class="stage" id="stage">
+  <button class="skipbtn" id="skipStory">건너뛰기</button>
+
+  <div class="scene on" style="background:linear-gradient(#fff1e6,#fde2e4)">
+    <div class="ground" style="background:#f3d9c9"></div>
+    <div class="label" style="top:32%"><small>OUR STORY</small><b>준혁 ♥ 지선</b><span>두 사람의 이야기를 시작합니다</span></div>
+    <div class="chars"><div class="who g" data-c="groom:#5b8def"></div><div class="who b" data-c="bride:#f28482"></div></div>
+  </div>
+
+  <div class="scene" style="background:linear-gradient(#a8dcff,#eaf6ff 70%)">
+    <div class="sun"></div><div class="tree" style="left:10%"></div><div class="tree" style="right:12%;--leaf:#7cc47c"></div>
+    <div class="ground" style="background:#8fd18f"></div>
+    <div class="label"><small>STAGE 1 · 2020. 08. 07</small><b>처음 만난 날</b></div>
+    <div class="chars">
+      <div class="who g" data-c="groom:#5b8def"></div>
+      <div class="who b" data-c="bride:#f28482"></div>
+    </div>
+  </div>
+
+  <div class="scene" data-hearts style="background:linear-gradient(#ffd6e7,#fff5f8)">
+    <div class="fx petal"></div><div class="tree" style="left:8%;--leaf:#ffb7c5"></div><div class="tree" style="right:8%;--leaf:#ffc8d4"></div>
+    <div class="ground" style="background:#a3d9a5"></div>
+    <div class="label"><small>STAGE 2 · 2023. 05. 03</small><b>1000일</b></div>
+    <p class="hint">화면을 탭해서 하트를 보내주세요</p>
+    <div class="chars">
+      <div class="who g" data-c="groom:#f4a261;shirt"></div>
+      <div class="who b" data-c="bride:#ffb4a2;flower"></div>
+    </div>
+  </div>
+
+  <div class="scene" style="background:linear-gradient(#c8d6e5,#eef2f7)">
+    <div class="fx snow"></div>
+    <div class="ground" style="background:#f7f9fc"></div>
+    <div class="label"><small>STAGE 3 · 2026. 01. 27</small><b>2000일</b></div>
+    <div class="chars">
+      <div class="who g" data-c="groom:#264653;scarf"></div>
+      <div class="who b" data-c="bride:#e5989b;scarf"></div>
+    </div>
+  </div>
+
+  <div class="scene dark" data-gate style="background:linear-gradient(#0b1a3a,#2a3d6b)">
+    <div class="fx stars"></div><div class="moon"></div>
+    <div class="ground" style="background:#1c2a4a"></div>
+    <div class="label"><small>STAGE 4 · 2026. 04. 12</small><b>프러포즈</b></div>
+    <p class="hint">반지를 탭해서 건네주세요</p>
+    <button class="ring" id="ring" aria-label="반지">💍</button>
+    <div class="chars">
+      <div class="who g" data-c="groom:#2b2d42;shirt"></div>
+      <div class="who b" data-c="bride:#cdb4db"></div>
+    </div>
+  </div>
+
+  <div class="scene" style="background:linear-gradient(#fff1e6,#fde2e4)">
+    <div class="fx confetti"></div><div class="arch"></div>
+    <div class="ground" style="background:linear-gradient(90deg,#e9d8c7 30%,#d9534f 30%,#d9534f 70%,#e9d8c7 70%)"></div>
+    <div class="label"><small>FINAL · 2027. 03. 14</small><b>결혼합니다</b><span>웨딩스퀘어 강변 3F 루시드 홀 · 오후 12시 30분</span></div>
+    <div class="chars">
+      <div class="who g" data-c="groom:#222;shirt;bowtie"></div>
+      <div class="who b" data-c="bride:#fff;gown;veil;bouquet"></div>
+    </div>
+  </div>
+
+  <div class="ui"><button class="next" id="next">시작하기 ▶</button><div class="dots" id="dots"></div></div>
+</div>
+
+<nav class="tabs"><a class="on">클래식</a><a href="dev/index.html">터미널</a></nav>
 <audio id="bgm" src="music/bgm.m4a" loop preload="none"></audio>
 <button class="music" id="music" aria-label="배경음악">♪</button>
 
@@ -237,6 +369,94 @@ lb.onclick = () => lb.close();                     // 마우스용
 lb.querySelector('.prev').onclick = e => { e.stopPropagation(); show(cur - 1); };
 lb.querySelector('.next').onclick = e => { e.stopPropagation(); show(cur + 1); };
 document.addEventListener('gesturestart', e => lb.open && e.preventDefault());
+
+// ══ 스토리 애니메이션 ══
+const SKIN = '#f7d9c4', HAIR = '#2f2a28';
+// 코드로 그린 캐릭터. 색과 옵션(shirt, scarf, bowtie / flower, scarf, gown, veil, bouquet)만 바꿔 장면별 옷을 표현
+const groom = (top, o) => `<svg viewBox="0 0 100 170">
+  <g class="leg l"><rect x="37" y="118" width="10" height="38" rx="4" fill="#3a3a48"/><rect x="34" y="150" width="16" height="8" rx="3" fill="#222"/></g>
+  <g class="leg r"><rect x="53" y="118" width="10" height="38" rx="4" fill="#3a3a48"/><rect x="50" y="150" width="16" height="8" rx="3" fill="#222"/></g>
+  <rect x="28" y="72" width="44" height="52" rx="14" fill="${top}"/>
+  ${o.shirt ? '<path d="M43 72 L50 98 L57 72Z" fill="#fff"/>' : ''}
+  ${o.bowtie ? '<path d="M42 74 L50 78 L58 74 L58 82 L50 78 L42 82Z" fill="#c0392b"/>' : ''}
+  <g class="arm l"><rect x="19" y="76" width="10" height="36" rx="5" fill="${top}"/><circle cx="24" cy="114" r="6" fill="${SKIN}"/></g>
+  <g class="arm r"><rect x="71" y="76" width="10" height="36" rx="5" fill="${top}"/><circle cx="76" cy="114" r="6" fill="${SKIN}"/></g>
+  ${o.scarf ? '<rect x="27" y="65" width="46" height="13" rx="6" fill="#d62828"/><rect x="58" y="72" width="11" height="28" rx="4" fill="#d62828"/>' : ''}
+  <circle cx="50" cy="44" r="28" fill="${SKIN}"/>
+  <path d="M22 44 Q22 12 50 12 Q78 12 78 44 Q70 26 50 30 Q30 26 22 44Z" fill="${HAIR}"/>
+  <circle cx="40" cy="49" r="8" fill="none" stroke="#333" stroke-width="2"/><circle cx="60" cy="49" r="8" fill="none" stroke="#333" stroke-width="2"/><line x1="48" y1="49" x2="52" y2="49" stroke="#333" stroke-width="2"/>
+  <circle cx="40" cy="50" r="2.2" fill="#222"/><circle cx="60" cy="50" r="2.2" fill="#222"/>
+  <path d="M43 61 Q50 67 57 61" fill="none" stroke="#c0605a" stroke-width="2" stroke-linecap="round"/>
+</svg>`;
+const bride = (dress, o) => `<svg viewBox="0 0 100 170">
+  <path d="M18 48 Q18 10 50 10 Q82 10 82 48 L86 100 Q50 108 14 100Z" fill="${HAIR}"/>
+  ${o.veil ? '<path d="M14 30 Q50 -10 86 30 L96 120 Q50 104 4 120Z" fill="#fff" opacity=".5"/>' : ''}
+  <g class="leg l"><rect x="38" y="120" width="9" height="34" rx="4" fill="${SKIN}"/><rect x="35" y="148" width="15" height="8" rx="3" fill="#a2455c"/></g>
+  <g class="leg r"><rect x="53" y="120" width="9" height="34" rx="4" fill="${SKIN}"/><rect x="50" y="148" width="15" height="8" rx="3" fill="#a2455c"/></g>
+  <path d="M34 72 L66 72 L${o.gown ? 90 : 74} 130 L${o.gown ? 10 : 26} 130Z" fill="${dress}" stroke="${o.gown ? '#eee' : 'none'}"/>
+  <g class="arm l"><rect x="22" y="76" width="9" height="34" rx="5" fill="${SKIN}"/></g>
+  <g class="arm r"><rect x="69" y="76" width="9" height="34" rx="5" fill="${SKIN}"/></g>
+  ${o.scarf ? '<rect x="29" y="65" width="42" height="13" rx="6" fill="#f4a261"/>' : ''}
+  ${o.bouquet ? '<circle cx="50" cy="106" r="13" fill="#b7e4c7"/><circle cx="44" cy="102" r="5" fill="#fff"/><circle cx="56" cy="102" r="5" fill="#fff"/><circle cx="50" cy="111" r="5" fill="#ffafcc"/>' : ''}
+  <circle cx="50" cy="44" r="27" fill="${SKIN}"/>
+  <path d="M23 44 Q23 14 50 14 Q77 14 77 44 Q70 28 58 32 Q52 22 44 32 Q32 28 23 44Z" fill="${HAIR}"/>
+  ${o.flower ? '<circle cx="71" cy="26" r="6" fill="#ff8fab"/><circle cx="71" cy="26" r="2" fill="#fff"/>' : ''}
+  <circle cx="40" cy="49" r="2.4" fill="#222"/><circle cx="60" cy="49" r="2.4" fill="#222"/>
+  <circle cx="35" cy="57" r="3.5" fill="#f5a7a7" opacity=".7"/><circle cx="65" cy="57" r="3.5" fill="#f5a7a7" opacity=".7"/>
+  <path d="M44 61 Q50 66 56 61" fill="none" stroke="#d4707a" stroke-width="2" stroke-linecap="round"/>
+</svg>`;
+document.querySelectorAll('[data-c]').forEach(el => {
+  const [kind, ...opts] = el.dataset.c.split(';'), [type, color] = kind.split(':');
+  const o = Object.fromEntries(opts.map(k => [k, true]));
+  el.insertAdjacentHTML('afterbegin', type === 'groom' ? groom(color, o) : bride(color, o));
+});
+// 배경 효과 (꽃잎·눈·별·꽃가루)
+const COLORS = ['#ff6b8a', '#ffd166', '#06d6a0', '#4cc9f0', '#c77dff'];
+document.querySelectorAll('.fx').forEach(fx => {
+  const stars = fx.classList.contains('stars'), n = stars ? 40 : 14;
+  fx.innerHTML = Array.from({ length: n }, (_, i) => {
+    const l = Math.random() * 100, d = 7 + Math.random() * 6, dl = -Math.random() * 12;
+    if (stars) return `<i style="left:${l}%;top:${Math.random() * 60}%;animation-delay:${Math.random() * 2}s"></i>`;
+    const c = fx.classList.contains('confetti') ? `background:${COLORS[i % 5]};` : '';
+    return `<i style="left:${l}%;animation-duration:${d}s;animation-delay:${dl}s;${c}"></i>`;
+  }).join('');
+});
+
+const stage = document.getElementById('stage'), scenes = [...stage.querySelectorAll('.scene')];
+const nextBtn = document.getElementById('next'), dots = document.getElementById('dots');
+dots.innerHTML = scenes.map(() => '<i></i>').join('');
+let si = 0, walkTimer;
+document.body.style.overflow = 'hidden';
+function go(i) {
+  scenes[si].classList.remove('on'); si = i;
+  const sc = scenes[si]; sc.classList.add('on');
+  [...dots.children].forEach((d, k) => d.classList.toggle('on', k === si));
+  const chars = sc.querySelectorAll('.who');
+  chars.forEach(c => { c.classList.add('walk'); c.classList.remove('idle'); });
+  clearTimeout(walkTimer);
+  walkTimer = setTimeout(() => chars.forEach(c => { c.classList.remove('walk'); c.classList.add('idle'); }), 1650);
+  nextBtn.hidden = 'gate' in sc.dataset;
+  nextBtn.textContent = si === scenes.length - 1 ? '청첩장 보기 💌' : si === 0 ? '시작하기 ▶' : '다음 ▶';
+}
+const finish = () => { stage.classList.add('off'); document.body.style.overflow = ''; };
+nextBtn.onclick = () => si < scenes.length - 1 ? go(si + 1) : finish();
+document.getElementById('skipStory').onclick = finish;
+go(0);
+
+// 탭하면 하트 (1000일 장면)
+const fly = (x, y, box) => { const h = document.createElement('span'); h.className = 'fly'; h.textContent = '♥'; h.style.left = x + 'px'; h.style.top = y + 'px'; box.appendChild(h); setTimeout(() => h.remove(), 1200); };
+stage.querySelector('[data-hearts]').addEventListener('click', e => fly(e.clientX - 12, e.clientY - 12, e.currentTarget));
+// 반지 건네기 (프러포즈 장면)
+document.getElementById('ring').onclick = e => {
+  e.currentTarget.classList.add('given');
+  const sc = e.currentTarget.closest('.scene');
+  sc.querySelector('.hint').remove();
+  setTimeout(() => {
+    const r = sc.querySelector('.who.b').getBoundingClientRect();
+    for (let k = 0; k < 8; k++) setTimeout(() => fly(r.left + Math.random() * r.width, r.top + 20 + Math.random() * 40, sc), k * 120);
+    nextBtn.hidden = false;
+  }, 900);
+};
 
 // 배경음악: 첫 터치에 재생 시작, 버튼으로 켜고 끄기 (모바일은 소리 자동재생 불가)
 const bgm = document.getElementById('bgm'), mbtn = document.getElementById('music');
