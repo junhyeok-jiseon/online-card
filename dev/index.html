@@ -7,7 +7,7 @@
 <title>wedding.sh — 오준혁 & 박지선</title> <!-- ★ -->
 <meta property="og:title" content="오준혁 ♥ 박지선 결혼합니다"> <!-- ★ -->
 <meta property="og:description" content="2027-03-14 12:30 @ 웨딩스퀘어 강변"> <!-- ★ -->
-<meta property="og:image" content="https://junhyeok-jiseon.github.io/online-card/images/00.jpeg"> <!-- ★ -->
+<meta property="og:image" content="https://junhyeok-jiseon.github.io/online-card/images/main.jpg"> <!-- ★ -->
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; }
@@ -36,7 +36,8 @@ table { border-collapse: collapse; margin: 0 auto 12px; }
 td, th { width: 40px; height: 36px; text-align: center; font-weight: 400; color: #6e7781; }
 th { color: #0969da; font-size: 12px; }
 td.dday { background: #1a7f37; color: #fff; border-radius: 6px; font-weight: 700; }
-.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; grid-auto-flow: dense; }
+.gallery img.wide { grid-column: span 2; aspect-ratio: 3/2; } /* 가로 사진은 두 칸 */
 .gallery img { aspect-ratio: 1; object-fit: cover; border-radius: 6px; border: 1px solid #d0d7de; cursor: pointer; }
 iframe { width: 100%; height: 240px; border: 1px solid #d0d7de; border-radius: 8px; margin: 12px 0; }
 .btn { font: inherit; font-size: 12px; color: #1f2328; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 6px 12px; text-decoration: none; cursor: pointer; }
@@ -116,10 +117,24 @@ dialog .prev { left: 10px; } dialog .next { right: 10px; }
 <section>
   <h2>gallery</h2>
   <div class="gallery"> <!-- ★ 사진 개수 자유 -->
-    <img src="../images/01.jpeg" alt="">
-    <img src="../images/02.jpeg" alt="">
-    <img src="../images/03.jpeg" alt="">
-    <img src="../images/04.jpeg" alt="">
+    <img src="../images/01.jpg" alt="">
+    <img src="../images/02.jpg" alt="">
+    <img src="../images/03.jpg" alt="" class="wide">
+    <img src="../images/04.jpg" alt="">
+    <img src="../images/05.jpg" alt="">
+    <img src="../images/06.jpg" alt="">
+    <img src="../images/07.jpg" alt="">
+    <img src="../images/08.jpg" alt="">
+    <img src="../images/09.jpg" alt="">
+    <img src="../images/10.jpg" alt="">
+    <img src="../images/11.jpg" alt="">
+    <img src="../images/12.jpg" alt="">
+    <img src="../images/13.jpg" alt="">
+    <img src="../images/14.jpg" alt="">
+    <img src="../images/15.jpg" alt="" class="wide">
+    <img src="../images/16.jpg" alt="">
+    <img src="../images/17.jpg" alt="">
+    <img src="../images/18.jpg" alt="">
   </div>
 </section>
 
