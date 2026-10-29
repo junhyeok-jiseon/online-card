@@ -54,6 +54,9 @@ details { text-align: left; margin: 10px 0; background: #fff; border: 1px solid 
 summary { padding: 14px 18px; font-size: 14px; font-weight: 500; cursor: pointer; }
 .account { display: flex; justify-content: space-between; align-items: center; padding: 10px 18px; font-size: 14px; border-top: 1px solid #f3ece6; }
 .account small { display: block; color: #9b8478; }
+.info { margin-top: 24px; padding: 2px 18px 18px; background: #fff; border: 1px solid #eee2da; border-radius: 10px; text-align: left; }
+.info dt { margin-top: 16px; font-size: 13px; font-weight: 500; color: #b98a76; letter-spacing: 1px; }
+.info dd { margin: 2px 0 0; font-size: 13px; color: #7a655b; line-height: 1.9; }
 .notice { margin-top: 28px; padding: 16px; background: #fff; border: 1px solid #eee2da; border-radius: 10px; font-size: 13px; color: #7a655b; line-height: 1.9; }
 footer { padding: 40px; text-align: center; font-size: 12px; color: #b9a59a; }
 footer .script { font-size: 32px; color: #b98a76; margin-bottom: 16px; }
@@ -286,7 +289,18 @@ dialog .prev { left: 10px; } dialog .next { right: 10px; }
   <iframe src="https://maps.google.com/maps?q=서울 광진구 광나루로56길 85&z=16&output=embed" loading="lazy"></iframe>
   <a class="btn" href="https://map.kakao.com/link/search/웨딩스퀘어%20강변">카카오맵</a>
   <a class="btn" href="https://map.naver.com/p/search/웨딩스퀘어%20강변">네이버지도</a>
-  <p style="margin-top:24px;font-size:13px;color:#9b8478">지하철 2호선 강변역 1, 2번 출구 연결 테크노마트 강변 3F<br>주차: 테크노마트 주차장 B2~B5, 2시간 무료<br>B2 300번대 핑크색 구역에 주차하시면 입구가 가깝습니다</p>
+  <dl class="info">
+    <dt>지하철 이용 시</dt>
+    <dd>2호선 강변역 하차<br>테크노마트 판매동 지하 1층과 바로 연결됩니다</dd>
+    <dt>자차 이용 시</dt>
+    <dd>강변 테크노마트 지하 주차장 이용<br>B3, B4층에 주차하실 수 있습니다</dd>
+    <dt>주차 안내</dt>
+    <dd>2시간 무료, 이후 30분당 1,000원<br>연회장 앞에서 주차 등록을 꼭 해주세요</dd>
+    <dt>연회장 및 식사</dt>
+    <dd>연회장은 3층에 있습니다<br>식사는 오후 1시 30분부터 3시 30분까지입니다</dd>
+    <dt>ATM 위치</dt>
+    <dd>건물 지하 1층 신한은행, 3층 우리은행</dd>
+  </dl>
   <p class="notice">예식장 공간이 협소하여<br>화환은 정중히 사양합니다.<br>축하해 주시는 마음만 감사히 받겠습니다.</p>
 </section>
 
@@ -296,7 +310,7 @@ dialog .prev { left: 10px; } dialog .next { right: 10px; }
   <details>
     <summary>신랑측 계좌번호</summary>
     <div class="account"><div>신랑 오준혁<small>카카오뱅크 3333-07-4834361</small></div><button class="btn" data-copy="3333074834361">복사</button></div>
-    <!-- TODO 신랑 아버지 계좌: <div class="account"><div>아버지 오치식<small>은행 계좌번호</small></div><button class="btn" data-copy="계좌번호">복사</button></div> -->
+    <div class="account"><div>아버지 오치식<small>국민은행 580902-01-023531</small></div><button class="btn" data-copy="58090201023531">복사</button></div>
   </details>
   <details>
     <summary>신부측 계좌번호</summary>
